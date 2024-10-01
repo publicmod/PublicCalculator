@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ff4d4d; /* Fondo rojo */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .display {
+            background-color: #1e1e1e;
+            color: white;
+            font-size: 2rem;
+            padding: 20px;
+            border: none;
+            text-align: right;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .button {
+            width: 70px;
+            height: 70px;
+            font-size: 1.5rem;
+            margin: 5px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            filter: brightness(1.2);
+        }
+
+        /* Colores de botones como una calculadora tradicional */
+        .button.grey1 { background-color: #e0e0e0;"" color: #000; } /* Botones de números */
+        .button.grey2 { background-color: #c0c0c0; color: #000; } /* Botones de números más oscuros */
+        .button.operator { background-color: #666; color: white; } /* Botones de operadores */
+        .button.equal {
+            background-color: #c0c0c0;;
+            color: white;
+            width: calc(94%);
+        }
+
+        /* Grid layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .grid-container {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        /* Extender el botón = horizontalmente */
+        .button.equal {
+            grid-column: span 2;
+            justify-self: start;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" class="display" id="display" disabled>
+    <div class="grid-container">
+        <button class="button operator" onclick="clearDisplay()">C</button>
+        <button class="button operator">(</button>
+        <button class="button operator">)</button>
+        <button class="button operator">÷</button>
+
+        <button class="button grey1">7</button>
+        <button class="button grey1">8</button>
+        <button class="button grey1">9</button>
+        <button class="button operator">×</button>
+
+        <button class="button grey2">4</button>
+        <button class="button grey2">5</button>
+        <button class="button grey2">6</button>
+        <button class="button operator">-</button>
+
+        <button class="button grey1">1</button>
+        <button class="button grey1">2</button>
+        <button class="button grey1">3</button>
+        <button class="button operator">+</button>
+
+        <button class="button grey2">0</button>
+        <button class="button grey2">.</button>
+        <button class="button equal" onclick="calculate()">=</button>
+    </div>
+</div>
+
+<script>
+    let display = document.getElementById("display");
+
+    function clearDisplay() {
+        display.value = "";
+    }
+
+    function appendToDisplay(value) {
+        display.value += value;
+    }
+
+    function calculate() {
+        try {
+            display.value = eval(display.value.replace('÷', '/').replace('×', '*'));
+        } catch {
+            display.value = "Error";
+        }
+    }
+
+    document.querySelectorAll('.button').forEach(button => {
+        button.addEventListener('click', () => {
+            if (!['=', 'C'].includes(button.textContent)) {
+                appendToDisplay(button.textContent);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
